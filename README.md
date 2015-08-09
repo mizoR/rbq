@@ -1,6 +1,7 @@
 # rbq
 [![Build Status](https://travis-ci.org/mizoR/rbq.svg)](https://travis-ci.org/mizoR/rbq)
 [![Code Climate](https://codeclimate.com/github/mizoR/rbq/badges/gpa.svg)](https://codeclimate.com/github/mizoR/rbq)
+[![Test Coverage](https://codeclimate.com/github/mizoR/rbq/badges/coverage.svg)](https://codeclimate.com/github/mizoR/rbq/coverage)
 [![Dependency Status](https://gemnasium.com/mizoR/rbq.svg)](https://gemnasium.com/mizoR/rbq)
 
 rbq is a command-line processor like [jq](http://stedolan.github.io/jq/). It is equipped with ruby-syntax.
