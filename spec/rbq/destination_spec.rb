@@ -8,7 +8,7 @@ describe Rbq::Destination do
     let(:data) { [1, {foo: "bar"}] }
 
     before do
-      STDOUT.stub(:tty?).and_return(false)
+      allow(STDOUT).to receive(:tty?).and_return(false)
     end
 
     context do
