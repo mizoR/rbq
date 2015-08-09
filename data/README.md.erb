@@ -1,4 +1,5 @@
 # rbq
+[![Gem Version](https://badge.fury.io/rb/rbq.svg)](http://badge.fury.io/rb/rbq)
 [![Build Status](https://travis-ci.org/mizoR/rbq.svg)](https://travis-ci.org/mizoR/rbq)
 [![Code Climate](https://codeclimate.com/github/mizoR/rbq/badges/gpa.svg)](https://codeclimate.com/github/mizoR/rbq)
 [![Test Coverage](https://codeclimate.com/github/mizoR/rbq/badges/coverage.svg)](https://codeclimate.com/github/mizoR/rbq/coverage)
