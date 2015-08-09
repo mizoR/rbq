@@ -1,0 +1,82 @@
+# rbq
+
+rbq is a command-line processor like [jq](http://stedolan.github.io/jq/). It is equipped with ruby-syntax.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'rbq'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install rbq
+
+## Usage
+
+### Pre-conditions
+
+If you have the following json file:
+
+```sh
+$ cat source.json
+```
+
+```json
+<%= _dummy = @dummy %>
+```
+
+### Fetch first user
+
+```
+$ cat source.json | rbq '<%= script0 = 'first' %>'
+```
+
+```json
+<%= Rbq::Script.new(script0, src: {}, dst: {}).run(@dummy) %>
+```
+
+### Extract user's "id" and "name"
+
+```
+$ cat source.json | rbq '<%= script1 = 'map {|user| user.slice("id", "name")}' %>'
+```
+
+```json
+<%= Rbq::Script.new(script1, src: {}, dst: {}).run(@dummy) %>
+```
+
+### Extract only user's "name" and "tags", and convert to YAML.
+
+```
+$ cat source.json | rbq --dst-format yaml '<%= script2 = 'map {|user| user.slice("name", "tags")}' %>'
+```
+
+```yaml
+<%= Rbq::Script.new(script2, src: {}, dst: {format: 'yaml'}).run(@dummy) %>
+```
+
+### Render male's names in text.
+
+```
+$ cat source.json | rbq --dst-format text '<%= script3 = 'select {|user| user["gender"] == "male"}.map {|user| user["name"]}.join("\n")' %>'
+```
+
+```
+<%= Rbq::Script.new(script3, src: {}, dst: {format: 'text'}).run(@dummy) %>
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/mizoR/rbq.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
