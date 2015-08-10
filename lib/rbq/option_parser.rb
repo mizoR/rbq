@@ -28,10 +28,6 @@ module Rbq
             o.version = Rbq::VERSION
             o.separator SEPARATOR
 
-            o.on('--[no-]quirks', 'Enable or disable quirks mode for JSON') do |v|
-              opts[:src][:quirks_mode] = opts[:dst][:quirks_mode] = v
-            end
-
             o.on('--src-format FORMAT', 'Parse stdin as specified format') do |v|
               opts[:src][:format] = v
             end
