@@ -1,3 +1,4 @@
+require 'rbq/middleware/void'
 require 'rbq/middleware/deserialize'
 require 'rbq/middleware/serialize'
 

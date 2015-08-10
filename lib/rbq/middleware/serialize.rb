@@ -1,5 +1,3 @@
-require 'rbq/middleware/serialize/void'
-
 module Rbq
   module Middleware
     module Serialize
