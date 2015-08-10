@@ -3,7 +3,7 @@ require 'json'
 module Rbq
   module Middleware
     module Deserialize
-      class JSON
+      class JSON < Void
         def initialize(app, options={})
           @app = app
           @options = options.reverse_merge(quircks_mode: true)

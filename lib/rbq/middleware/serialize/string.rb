@@ -1,11 +1,7 @@
 module Rbq
   module Middleware
     module Serialize
-      class String
-        def initialize(app, options={})
-          @app = app
-        end
-
+      class String < Void
         def call(data)
           @app.call(data.to_s)
         end

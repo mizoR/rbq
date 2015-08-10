@@ -3,12 +3,7 @@ require 'csv'
 module Rbq
   module Middleware
     module Serialize
-      class CSV
-        def initialize(app, options={})
-          @app = app
-          @options = options
-        end
-
+      class CSV < Void
         def call(data)
           data = @app.call(data)
           generate(data, @options)

@@ -1,3 +1,5 @@
+require 'rbq/middleware/deserialize/void'
+
 module Rbq
   module Middleware
     module Deserialize

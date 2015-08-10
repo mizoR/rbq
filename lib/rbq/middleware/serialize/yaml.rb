@@ -3,11 +3,7 @@ require 'yaml'
 module Rbq
   module Middleware
     module Serialize
-      class YAML
-        def initialize(app, options={})
-          @app = app
-        end
-
+      class YAML < Void
         def call(data)
           data = @app.call(data)
           ::YAML.dump(data)
