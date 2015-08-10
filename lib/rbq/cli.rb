@@ -9,10 +9,11 @@ module Rbq
       end
     end
 
-    attr_reader :parser, :script
+    attr_reader :parser, :script, :code, :file
 
     def initialize(argv)
       options = Rbq::OptionParser.parse!(argv)
+      @code, @file = *argv[0..1]
 
       @script = Rbq::Script.new(argv.first) do |rbq|
         rbq.use Rbq::Middleware::Deserialize[options[:from]]
@@ -22,11 +23,8 @@ module Rbq
     end
 
     def run
-      if STDIN.tty?
-        puts Rbq::OptionParser.help
-      else
-        puts script.run(STDIN.read)
-      end
+      body = STDIN.tty? ? File.read(file) : STDIN.read
+      puts script.run(body)
     end
   end
 end

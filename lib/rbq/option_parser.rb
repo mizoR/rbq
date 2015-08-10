@@ -7,11 +7,7 @@ module Rbq
 
     BANNER = <<-BNR.strip_heredoc
         Usage:
-            $ #{SCRIPT_NAME} [options] <script>"
-
-        Example:
-            $ #{SCRIPT_NAME} [options] <script>" < ./path/to/input.json
-            $ cat ./path/to/input.json | #{File.basename($0)} [options] <script>"
+            $ #{SCRIPT_NAME} [options] <script> [file]
       BNR
 
     SEPARATOR = "\nOptions:"
