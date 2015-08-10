@@ -1,6 +1,7 @@
 require 'active_support/all'
 require 'rbq/destination'
 require 'rbq/evaluator'
+require 'rbq/middleware'
 require "rbq/script"
 require 'rbq/source'
 require "rbq/version"
