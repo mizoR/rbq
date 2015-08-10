@@ -1,25 +1,13 @@
 module Rbq
   module Middleware
     module Deserialize
-      extend ActiveSupport::Autoload
+      extend Middleware::MultiAutoload
+      extend Middleware::ConstIndexAccess
 
-      Deserializers = {
-        'json'   => :JSON,
-        'yaml'   => :YAML,
-        'csv'    => :CSV,
-        'string' => :String,
-      }
+      DESERIALIZERS = [:JSON, :YAML, :CSV, :String]
 
-      Deserializers.each do |_, deserializer|
-        autoload deserializer
-      end
-
-      class << self
-        def [](key)
-          deserializer = Deserializers.fetch(key.to_s)
-          const_get(deserializer, false)
-        end
-      end
+      const_index_access(*DESERIALIZERS)
+      multi_autoload(*DESERIALIZERS)
     end
   end
 end

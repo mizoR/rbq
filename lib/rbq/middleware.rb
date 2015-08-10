@@ -1,3 +1,5 @@
+require 'rbq/middleware/const_index_access'
+require 'rbq/middleware/multi_autoload'
 require 'rbq/middleware/void'
 require 'rbq/middleware/colorize'
 require 'rbq/middleware/deserialize'

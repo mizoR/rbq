@@ -1,25 +1,13 @@
 module Rbq
   module Middleware
     module Serialize
-      extend ActiveSupport::Autoload
+      extend Middleware::MultiAutoload
+      extend Middleware::ConstIndexAccess
 
-      Serializers = {
-        'json'   => :JSON,
-        'yaml'   => :YAML,
-        'csv'    => :CSV,
-        'string' => :String,
-      }
+      SERIALIZERS = [:JSON, :YAML, :CSV, :String]
 
-      Serializers.each do |_, serializer|
-        autoload serializer
-      end
-
-      class << self
-        def [](key)
-          serializer = Serializers.fetch(key.to_s)
-          const_get(serializer, false)
-        end
-      end
+      const_index_access(*SERIALIZERS)
+      multi_autoload(*SERIALIZERS)
     end
   end
 end
