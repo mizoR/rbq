@@ -4,7 +4,7 @@ module Rbq
 
     attr_reader :script
 
-    def initialize(script, src:, dst:)
+    def initialize(script)
       @script = script || DEFAULT_SCRIPT
       @middleware_stack = []
 
