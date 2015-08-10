@@ -6,7 +6,6 @@ module Rbq
 
     def initialize(script)
       @script = script || DEFAULT_SCRIPT
-      @middleware_stack = []
 
       yield self if block_given?
 
@@ -14,11 +13,11 @@ module Rbq
     end
 
     def use(middleware_klass, *middleware_options)
-      @middleware_stack << [middleware_klass, middleware_options]
+      middlewares << [middleware_klass, middleware_options]
     end
 
     def build
-      @middleware_stack.inject(self) {|app, (klass, options)| klass.new(app, *options)}
+      middlewares.inject(self) {|app, (klass, options)| klass.new(app, *options)}
     end
 
     def run(data)
