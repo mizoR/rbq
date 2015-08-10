@@ -21,18 +21,18 @@ module Rbq
       def_delegator :@last_parser, :help
 
       def parse!(argv)
-        options = {src: {}, dst: {}}
+        options = {src: {format: 'json'}, dst: {format: 'json'}}
         options.tap do |opts|
           @last_parser = ::OptionParser.new do |o|
             o.banner  = BANNER
             o.version = Rbq::VERSION
             o.separator SEPARATOR
 
-            o.on('--src-format FORMAT', 'Parse stdin as specified format') do |v|
+            o.on('--in FORMAT', 'Parse stdin as specified format') do |v|
               opts[:src][:format] = v
             end
 
-            o.on('--dst-format FORMAT', 'Output results as specified format') do |v|
+            o.on('--out FORMAT', 'Output results as specified format') do |v|
               opts[:dst][:format] = v
             end
 
