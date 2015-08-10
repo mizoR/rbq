@@ -4,13 +4,13 @@ module Rbq
   module Middleware
     module Deserialize
       class CSV
-        def initialize(app, fs=nil, rs=nil)
+        def initialize(app, options={})
           @app = app
-          @fs, @rs = fs, rs
+          @options = options
         end
 
         def call(data)
-          data = ::CSV.parse(data, @fs, @rs)
+          data = ::CSV.parse(data, @options)
           @app.call(data)
         end
       end

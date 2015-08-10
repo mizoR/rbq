@@ -4,7 +4,7 @@ module Rbq
   module Middleware
     module Deserialize
       class YAML
-        def initialize(app)
+        def initialize(app, options={})
           @app = app
         end
 

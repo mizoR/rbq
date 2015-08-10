@@ -2,7 +2,7 @@ module Rbq
   module Middleware
     module Deserialize
       class String
-        def initialize(app)
+        def initialize(app, options={})
           @app = app
         end
 
