@@ -13,9 +13,11 @@ module Rbq
 
     def initialize(argv)
       options = Rbq::OptionParser.parse!(argv)
+      input_opts, output_opts = options.slice(:input, :output)
+
       @script = Rbq::Script.new(argv.first, options) do |rbq|
-        rbq.use Rbq::Middleware::Deserialize[options[:src][:format]]
-        rbq.use Rbq::Middleware::Serialize[options[:dst][:format]]
+        rbq.use Rbq::Middleware::Deserialize[input_opts.delete(:format)], input_opts
+        rbq.use Rbq::Middleware::Serialize[output_opts.delete(:format)], output_opts
       end
     end
 

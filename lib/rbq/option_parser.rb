@@ -21,7 +21,7 @@ module Rbq
       def_delegator :@last_parser, :help
 
       def parse!(argv)
-        options = {src: {format: 'json'}, dst: {format: 'json'}}
+        options = {input: {format: 'json'}, output: {format: 'json'}}
         options.tap do |opts|
           @last_parser = ::OptionParser.new do |o|
             o.banner  = BANNER
@@ -29,11 +29,11 @@ module Rbq
             o.separator SEPARATOR
 
             o.on('--in FORMAT', 'Parse stdin as specified format') do |v|
-              opts[:src][:format] = v
+              opts[:input][:format] = v
             end
 
             o.on('--out FORMAT', 'Output results as specified format') do |v|
-              opts[:dst][:format] = v
+              opts[:output][:format] = v
             end
 
             o.on('-r LIBRARY', '--require LIBRARY', "`require` a Ruby script at startup") do |v|
