@@ -17,6 +17,7 @@ module Rbq
       @script = Rbq::Script.new(argv.first) do |rbq|
         rbq.use Rbq::Middleware::Deserialize[options[:from]]
         rbq.use Rbq::Middleware::Serialize[options[:to]]
+        rbq.use Rbq::Middleware::Colorize, lang: options[:to] if STDOUT.tty?
       end
     end
 
