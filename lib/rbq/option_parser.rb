@@ -28,6 +28,10 @@ module Rbq
             o.version = Rbq::VERSION
             o.separator SEPARATOR
 
+            o.on('--[no-]symbolize-names') do |v|
+              opts[:input][:symbolize_names] = v
+            end
+
             o.on('--in FORMAT', 'Parse stdin as specified format') do |v|
               opts[:input][:format] = v
             end
