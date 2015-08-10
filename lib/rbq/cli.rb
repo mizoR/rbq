@@ -22,9 +22,14 @@ module Rbq
       end
     end
 
-    def run
-      body = STDIN.tty? ? File.read(file) : STDIN.read
-      puts script.run(body)
+    def run(data=detect_data)
+      puts script.run(data)
+    end
+
+    private
+
+    def detect_data
+      STDIN.tty? ? File.read(file) : STDIN.read
     end
   end
 end
