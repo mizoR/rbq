@@ -16,12 +16,14 @@ module Rbq
 
     SEPARATOR = "\nOptions:"
 
+    DEFAULT_FORMAT = 'json'.freeze
+
     class << self
       extend Forwardable
       def_delegator :@last_parser, :help
 
       def parse!(argv)
-        options = {input: {format: 'json'}, output: {format: 'json'}}
+        options = {input: {format: DEFAULT_FORMAT}, output: {format: DEFAULT_FORMAT}}
         options.tap do |opts|
           @last_parser = ::OptionParser.new do |o|
             o.banner  = BANNER
