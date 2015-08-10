@@ -23,32 +23,15 @@ module Rbq
       def_delegator :@last_parser, :help
 
       def parse!(argv)
-        options = {input: {format: DEFAULT_FORMAT}, output: {format: DEFAULT_FORMAT}}
+        options = {from: DEFAULT_FORMAT, to: DEFAULT_FORMAT}
         options.tap do |opts|
           @last_parser = ::OptionParser.new do |o|
             o.banner  = BANNER
             o.version = Rbq::VERSION
             o.separator SEPARATOR
 
-            o.on('--[no-]symbolize-names') do |v|
-              opts[:input][:symbolize_names] = v
-            end
-
-            o.on('--format FORMAT', 'Parse stdin as specified format') do |v|
-              opts[:input][:format] = opts[:output][:format] = v
-            end
-
-            o.on('--in FORMAT', 'Parse stdin as specified format') do |v|
-              opts[:input][:format] = v
-            end
-
-            o.on('--out FORMAT', 'Output results as specified format') do |v|
-              opts[:output][:format] = v
-            end
-
-            o.on('-r LIBRARY', '--require LIBRARY', "`require` a Ruby script at startup") do |v|
-              require v
-            end
+            o.on('--from FORMAT', 'Import format') {|v| opts[:from] = v}
+            o.on('--to FORMAT', 'Dump format') {|v| opts[:to] = v}
 
             o.parse!(argv)
           end
