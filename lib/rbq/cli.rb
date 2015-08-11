@@ -5,7 +5,7 @@ module Rbq
   class CLI
     class << self
       def start(argv=ARGV)
-        puts new(argv.dup).run
+        new(argv.dup).run
       end
     end
 
@@ -19,6 +19,7 @@ module Rbq
         rbq.use Rbq::Middleware::Deserialize[options[:from]]
         rbq.use Rbq::Middleware::Serialize[options[:to]]
         rbq.use Rbq::Middleware::Colorize, lang: options[:to] if STDOUT.tty?
+        rbq.use Rbq::Middleware::Redirect, to: $stdout
       end
     end
 
