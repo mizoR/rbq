@@ -28,8 +28,9 @@ module Rbq
             o.version = Rbq::VERSION
             o.separator SEPARATOR
 
-            o.on('--from FORMAT', 'Import format') {|v| opts[:from] = v}
-            o.on('--to FORMAT', 'Dump format') {|v| opts[:to] = v}
+            o.on(      '--format  FORMAT', 'Load and dump format') {|v| opts[:from] = opts[:to] = v}
+            o.on(      '--from    FORMAT', 'Load format') {|v| opts[:from] = v}
+            o.on(      '--to      FORMAT', 'Dump format') {|v| opts[:to] = v}
             o.on('-r', '--require LIBRARY', 'Require specified library') {|v| require v}
 
             o.parse!(argv)
