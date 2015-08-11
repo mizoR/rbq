@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["mizokami"]
   spec.email         = ["r.mizokami@gmail.com"]
 
-  spec.summary       = %q{Command-line processor like jq. It is equipped with ruby-syntax.}
-  spec.description   = %q{Command-line processor like jq. It is equipped with ruby-syntax.}
+  spec.summary       = %q{Command-line processor like jq. rbq allows you to use the Ruby-syntax.}
+  spec.description   = %q{Command-line processor like jq. rbq allows you to use the Ruby-syntax.}
   spec.homepage      = "https://github.com/mizoR/rbq"
   spec.license       = "MIT"
 
