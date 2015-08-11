@@ -30,6 +30,7 @@ module Rbq
 
             o.on('--from FORMAT', 'Import format') {|v| opts[:from] = v}
             o.on('--to FORMAT', 'Dump format') {|v| opts[:to] = v}
+            o.on('-r', '--require LIBRARY', 'Require specified library') {|v| require v}
 
             o.parse!(argv)
           end
