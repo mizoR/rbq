@@ -57,20 +57,6 @@ describe Rbq::CLI do
         end
       end
 
-      context "when narrow the languages', and dump as CSV" do
-        let(:argv)   { ['--to', 'csv', script] }
-        let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| [language["lang"], language["inspired_by"].count]}' }
-
-        it do
-          is_expected.to eq CSV.generate {|csv|
-            csv << ["C#",         4]
-            csv << ["JavaScript", 4]
-            csv << ["Perl",       5]
-            csv << ["Ruby",       4]
-          }
-        end
-      end
-
       context "when Ruby was born in?" do
         let(:argv)   { ['--to', 'string', script] }
         let(:script) { 'detect {|language| language["lang"] == "Ruby"}.slice("born_in").flatten.unshift("Ruby was").join(" ").gsub(/_/, " ")' }
