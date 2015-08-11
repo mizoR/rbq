@@ -3,7 +3,12 @@ require 'yaml'
 module Rbq
   module Middleware
     module Deserialize
-      class YAML < Void
+      class YAML
+        def initialize(app, options={})
+          @app = app
+          @options = options
+        end
+
         def call(data)
           data = ::YAML.load(data)
           @app.call(data)
