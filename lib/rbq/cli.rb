@@ -5,7 +5,7 @@ module Rbq
   class CLI
     class << self
       def start(argv=ARGV)
-        new(argv.dup).run
+        puts new(argv.dup).run
       end
     end
 
@@ -23,7 +23,7 @@ module Rbq
     end
 
     def run(data=detect_data)
-      puts script.run(data)
+      script.run(data)
     end
 
     private
