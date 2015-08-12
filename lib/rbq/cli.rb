@@ -18,7 +18,7 @@ module Rbq
       @script = Rbq::Script.new(argv.first) do |rbq|
         rbq.use Rbq::Middleware::Deserialize[options[:from]]
         rbq.use Rbq::Middleware::Serialize[options[:to]]
-        rbq.use Rbq::Middleware::Colorize, lang: options[:to] if STDOUT.tty?
+        rbq.use Rbq::Middleware::Colorize, lang: options[:to] if $stdout.tty?
         rbq.use Rbq::Middleware::Redirect, to: $stdout
       end
     end
@@ -30,7 +30,7 @@ module Rbq
     private
 
     def detect_data
-      STDIN.tty? ? File.read(file) : STDIN.read
+      $stdin.tty? ? File.read(file) : $stdin.read
     end
   end
 end

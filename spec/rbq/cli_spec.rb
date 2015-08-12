@@ -47,7 +47,7 @@ describe Rbq::CLI do
   end
 
   before do
-    allow(STDOUT).to receive(:tty?).and_return(false)
+    allow($stdout).to receive(:tty?).and_return(false)
   end
 
   let(:cli) { described_class.new(argv) }
