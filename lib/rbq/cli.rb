@@ -37,6 +37,8 @@ module Rbq
       @files.each do |file|
         open(file) {|input| yield(input, $stdout)}
       end
+    rescue Errno::ENOENT => e
+      raise Rbq::Error.from(e)
     end
   end
 end
