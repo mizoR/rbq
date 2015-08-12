@@ -47,6 +47,9 @@ describe Rbq::CLI do
   end
 
   before do
+    allow($stdin).to receive(:tty?).and_return(false)
+    allow($stdin).to receive(:read).and_return(data)
+
     allow($stdout).to receive(:tty?).and_return(false)
   end
 
@@ -67,7 +70,7 @@ describe Rbq::CLI do
   end
 
   describe '#run' do
-    subject { capture(:stdout) { cli.run(data) } }
+    subject { capture(:stdout) { cli.run } }
 
     describe 'import as JSON' do
       let(:data)   { JSON.generate(languages) }
