@@ -35,6 +35,22 @@ describe Rbq::CLI do
     end
   end
 
+  shared_examples_for 'dump as TSV' do |options|
+    context "when extraction the languages inspired over 4 languages, and dump as TSV" do
+      let(:argv)   { ['--from', options[:from], '--to', 'tsv', script] }
+      let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| [language["lang"], language["inspired_by"].count]}' }
+
+      it do
+        is_expected.to eq CSV.generate(col_sep: "\t") {|csv|
+          csv << ["C#",         4]
+          csv << ["JavaScript", 4]
+          csv << ["Perl",       5]
+          csv << ["Ruby",       4]
+        }
+      end
+    end
+  end
+
   shared_examples_for 'dump as String' do |options|
     context "when Ruby was born in?" do
       let(:argv)   { ['--from', options[:from], '--to', 'string', script] }
@@ -81,6 +97,8 @@ describe Rbq::CLI do
 
       it_behaves_like 'dump as CSV', from: 'json'
 
+      it_behaves_like 'dump as TSV', from: 'yaml'
+
       it_behaves_like 'dump as String', from: 'json'
     end
 
@@ -92,6 +110,8 @@ describe Rbq::CLI do
       it_behaves_like 'dump as YAML', from: 'yaml'
 
       it_behaves_like 'dump as CSV', from: 'yaml'
+
+      it_behaves_like 'dump as TSV', from: 'yaml'
 
       it_behaves_like 'dump as String', from: 'yaml'
     end
