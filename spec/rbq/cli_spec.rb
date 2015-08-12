@@ -6,7 +6,7 @@ describe Rbq::CLI do
       let(:argv)   { ['--from', options[:from], script] }
       let(:script) { 'select {|language| language["lang"].length == 4}.map {|language| language["lang"]}' }
 
-      it { is_expected.to eq JSON.pretty_generate(%w|Java Perl Ruby|) }
+      it { is_expected.to eq JSON.pretty_generate(%w|Java Perl Ruby|) + "\n" }
     end
   end
 
@@ -41,7 +41,7 @@ describe Rbq::CLI do
       let(:script) { 'detect {|language| language["lang"] == "Ruby"}.slice("born_in").flatten.unshift("Ruby was").join(" ").gsub(/_/, " ")' }
 
       it do
-        is_expected.to eq 'Ruby was born in 1995'
+        is_expected.to eq "Ruby was born in 1995\n"
       end
     end
   end
@@ -67,7 +67,7 @@ describe Rbq::CLI do
   end
 
   describe '#run' do
-    subject { cli.run(data) }
+    subject { capture(:stdout) { cli.run(data) } }
 
     describe 'import as JSON' do
       let(:data)   { JSON.generate(languages) }
