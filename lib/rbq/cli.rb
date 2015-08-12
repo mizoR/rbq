@@ -6,7 +6,7 @@ module Rbq
     class << self
       def start(argv=ARGV)
         new(argv.dup).run
-      rescue Error => e
+      rescue Rbq::Error => e
         $stderr.puts e.message
       end
     end
@@ -37,8 +37,8 @@ module Rbq
       @files.each do |file|
         open(file) {|input| yield(input, $stdout)}
       end
-    rescue Errno::ENOENT => e
-      raise Rbq::Error.from(e)
+    rescue SystemCallError => e
+      raise Rbq::Error, "Cannot open file. -- #{e.message}"
     end
   end
 end
