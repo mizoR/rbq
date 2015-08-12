@@ -6,31 +6,37 @@ module Rbq
     class << self
       def start(argv=ARGV)
         new(argv.dup).run
+      rescue Error => e
+        $stderr.puts e.message
       end
     end
 
-    attr_reader :parser, :script, :code, :file
+    attr_reader :parser
 
     def initialize(argv)
-      options = Rbq::OptionParser.parse!(argv)
-      @code, @file = *argv[0..1]
+      @options = Rbq::OptionParser.parse!(argv)
+      @script, *@files = *argv
+    end
 
-      @script = Rbq::Script.new(argv.first) do |rbq|
-        rbq.use Rbq::Middleware::Deserialize[options[:from]]
-        rbq.use Rbq::Middleware::Serialize[options[:to]]
-        rbq.use Rbq::Middleware::Colorize, lang: options[:to] if $stdout.tty?
-        rbq.use Rbq::Middleware::Redirect, to: $stdout
+    def run
+      each_run do |input, output|
+        script = Rbq::Script.new(@script) do |rbq|
+          rbq.use Rbq::Middleware::Deserialize[@options[:from]]
+          rbq.use Rbq::Middleware::Serialize[@options[:to]]
+          rbq.use Rbq::Middleware::Colorize, lang: @options[:to] if output.tty?
+          rbq.use Rbq::Middleware::Redirect, to: output
+        end
+
+        script.run input.read
       end
     end
 
-    def run(data=detect_data)
-      script.run(data)
-    end
+    def each_run
+      return yield($stdin, $stdout) unless $stdin.tty?
 
-    private
-
-    def detect_data
-      $stdin.tty? ? File.read(file) : $stdin.read
+      @files.each do |file|
+        open(file) {|input| yield(input, $stdout)}
+      end
     end
   end
 end
