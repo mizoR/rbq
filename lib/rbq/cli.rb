@@ -11,11 +11,9 @@ module Rbq
       end
     end
 
-    attr_reader :parser
-
     def initialize(argv)
-      @options = Rbq::OptionParser.parse!(argv)
-      @script, *@files = *argv
+      parser = Rbq::OptionParser.new
+      @script, *@files, @options = parser.parse(argv)
     end
 
     def run
