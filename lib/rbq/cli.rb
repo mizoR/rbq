@@ -17,11 +17,14 @@ module Rbq
     end
 
     def run
+      from = @options[:from]
+      to   = @options[:to]
+
       each_run do |input, output|
         script = Rbq::Script.new(@script) do |rbq|
-          rbq.use Rbq::Middleware::Deserialize[@options[:from]]
-          rbq.use Rbq::Middleware::Serialize[@options[:to]]
-          rbq.use Rbq::Middleware::Colorize, lang: @options[:to] if output.tty?
+          rbq.use Rbq::Middleware::Deserialize[from[:format]], from[:options]
+          rbq.use Rbq::Middleware::Serialize[to[:format]], to[:options]
+          rbq.use Rbq::Middleware::Colorize, lang: to[:format] if output.tty?
           rbq.use Rbq::Middleware::Redirect, to: output
         end
 
