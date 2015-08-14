@@ -11,6 +11,7 @@ module Rbq
 
     SEPARATOR = "\nOptions:"
 
+    DEFAULT_SCRIPT = 'itself'.freeze
     DEFAULT_FORMAT = 'json'.freeze
 
     RE_NUMBER = %r|\A[1-9][0-9]*\z|
@@ -36,7 +37,9 @@ module Rbq
         from: { format: DEFAULT_FORMAT, options: {} },
         to:   { format: DEFAULT_FORMAT, options: {} },
       }
-      super(argv) + [@options]
+      argv = super(argv)
+      argv << DEFAULT_SCRIPT if argv.empty?
+      argv + [@options]
     end
 
     private
