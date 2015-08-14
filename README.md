@@ -88,6 +88,24 @@ Algol,2
 LISP,2
 ```
 
+### Select "born_in" and "lang", dump as LTSV
+
+```sh
+$ rbq --to ltsv 'map {|language| language.slice("born_in", "lang")}' languages.json
+```
+
+```ltsv
+born_in:1973	lang:C
+born_in:1980	lang:C++
+born_in:2000	lang:C#
+born_in:1994	lang:Java
+born_in:1995	lang:JavaScript
+born_in:1987	lang:Perl
+born_in:1995	lang:PHP
+born_in:1991	lang:Python
+born_in:1995	lang:Ruby
+```
+
 ### List the birth years of each languages, dump as String
 
 ```sh

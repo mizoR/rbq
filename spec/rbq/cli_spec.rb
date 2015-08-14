@@ -51,6 +51,22 @@ describe Rbq::CLI do
     end
   end
 
+  shared_examples_for 'dump as LTSV' do |options|
+    context "when extraction the languages inspired over 4 languages, and dump as LTSV" do
+      let(:argv)   { ['--from', options[:from], '--to', 'ltsv', script] }
+      let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| language.slice("lang", "born_in")}' }
+
+      it do
+        expect { cli.run }.to output([
+          LTSV.dump(lang: "C#",         born_in: 2000),
+          LTSV.dump(lang: "JavaScript", born_in: 1995),
+          LTSV.dump(lang: "Perl",       born_in: 1987),
+          LTSV.dump(lang: "Ruby",       born_in: 1995),
+        ].join("\n") + "\n").to_stdout
+      end
+    end
+  end
+
   shared_examples_for 'dump as String' do |options|
     context "when Ruby was born in?" do
       let(:argv)   { ['--from', options[:from], '--to', 'string', script] }
@@ -99,6 +115,8 @@ describe Rbq::CLI do
 
       it_behaves_like 'dump as TSV', from: 'yaml'
 
+      it_behaves_like 'dump as LTSV', from: 'yaml'
+
       it_behaves_like 'dump as String', from: 'json'
     end
 
@@ -112,6 +130,8 @@ describe Rbq::CLI do
       it_behaves_like 'dump as CSV', from: 'yaml'
 
       it_behaves_like 'dump as TSV', from: 'yaml'
+
+      it_behaves_like 'dump as LTSV', from: 'yaml'
 
       it_behaves_like 'dump as String', from: 'yaml'
     end
