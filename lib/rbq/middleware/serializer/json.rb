@@ -2,7 +2,7 @@ require 'json'
 
 module Rbq
   module Middleware
-    module Serialize
+    module Serializer
       class JSON
         def initialize(app, options={})
           @app = app

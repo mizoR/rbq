@@ -1,9 +1,8 @@
 require 'rbq/middleware/const_index_access'
 require 'rbq/middleware/multi_autoload'
-require 'rbq/middleware/colorize'
-require 'rbq/middleware/deserialize'
-require 'rbq/middleware/serialize'
-require 'rbq/middleware/redirect'
+require 'rbq/middleware/colorizer'
+require 'rbq/middleware/deserializer'
+require 'rbq/middleware/serializer'
 
 module Rbq
   module Middleware

@@ -1,16 +1,16 @@
-require 'json'
+require 'yaml'
 
 module Rbq
   module Middleware
-    module Deserialize
-      class JSON
+    module Deserializer
+      class YAML
         def initialize(app, options={})
           @app = app
-          @options = options.reverse_merge(quircks_mode: true)
+          @options = options
         end
 
         def call(data)
-          data = ::JSON.parse(data, @options)
+          data = ::YAML.load(data)
           @app.call(data)
         end
       end

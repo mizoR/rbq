@@ -1,6 +1,6 @@
 module Rbq
   module Middleware
-    module Serialize
+    module Serializer
       class String
         def initialize(app, options={})
           @app = app

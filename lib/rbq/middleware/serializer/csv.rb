@@ -2,7 +2,7 @@ require 'csv'
 
 module Rbq
   module Middleware
-    module Serialize
+    module Serializer
       class CSV
         def initialize(app, options={})
           @app = app

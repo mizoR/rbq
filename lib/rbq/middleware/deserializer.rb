@@ -1,6 +1,6 @@
 module Rbq
   module Middleware
-    module Deserialize
+    module Deserializer
       extend Middleware::MultiAutoload
       extend Middleware::ConstIndexAccess
 

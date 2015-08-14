@@ -22,13 +22,12 @@ module Rbq
 
       each_run do |input, output|
         script = Rbq::Script.new(@script) do |rbq|
-          rbq.use Rbq::Middleware::Deserialize[from[:format]], from[:options]
-          rbq.use Rbq::Middleware::Serialize[to[:format]], to[:options]
-          rbq.use Rbq::Middleware::Colorize, lang: to[:format] if output.tty?
-          rbq.use Rbq::Middleware::Redirect, to: output
+          rbq.use Rbq::Middleware::Deserializer[from[:format]], from[:options]
+          rbq.use Rbq::Middleware::Serializer[to[:format]], to[:options]
+          rbq.use Rbq::Middleware::Colorizer, lang: to[:format] if output.tty?
         end
 
-        script.run input.read
+        output.puts script.run(input.read)
       end
     end
 

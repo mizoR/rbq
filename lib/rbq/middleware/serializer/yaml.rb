@@ -2,7 +2,7 @@ require 'yaml'
 
 module Rbq
   module Middleware
-    module Serialize
+    module Serializer
       class YAML
         def initialize(app, options={})
           @app = app

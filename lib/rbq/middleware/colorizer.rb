@@ -2,7 +2,7 @@ require 'coderay'
 
 module Rbq
   module Middleware
-    class Colorize
+    class Colorizer
       def initialize(app, options)
         @app = app
         @lang = options[:lang]
