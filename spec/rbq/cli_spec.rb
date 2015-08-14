@@ -6,7 +6,7 @@ describe Rbq::CLI do
       let(:argv)   { ['--from', options[:from], script] }
       let(:script) { 'select {|language| language["lang"].length == 4}.map {|language| language["lang"]}' }
 
-      it { is_expected.to eq JSON.pretty_generate(%w|Java Perl Ruby|) + "\n" }
+      it { expect { cli.run }.to output(JSON.pretty_generate(%w|Java Perl Ruby|) + "\n").to_stdout }
     end
   end
 
@@ -15,7 +15,7 @@ describe Rbq::CLI do
       let(:argv)   { ['--from', options[:from], '--to', 'yaml', script] }
       let(:script) { 'max_by {|language| language["born_in"]}' }
 
-      it { is_expected.to eq YAML.dump('lang' => 'C#', 'born_in' => 2000, 'inspired_by' => %w|Delphi Java C++ Ruby|) }
+      it { expect { cli.run }.to output(YAML.dump('lang' => 'C#', 'born_in' => 2000, 'inspired_by' => %w|Delphi Java C++ Ruby|)).to_stdout }
     end
   end
 
@@ -25,12 +25,12 @@ describe Rbq::CLI do
       let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| [language["lang"], language["inspired_by"].count]}' }
 
       it do
-        is_expected.to eq CSV.generate {|csv|
+        expect { cli.run }.to output(CSV.generate {|csv|
           csv << ["C#",         4]
           csv << ["JavaScript", 4]
           csv << ["Perl",       5]
           csv << ["Ruby",       4]
-        }
+        }).to_stdout
       end
     end
   end
@@ -41,12 +41,12 @@ describe Rbq::CLI do
       let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| [language["lang"], language["inspired_by"].count]}' }
 
       it do
-        is_expected.to eq CSV.generate(col_sep: "\t") {|csv|
+        expect { cli.run }.to output(CSV.generate(col_sep: "\t") {|csv|
           csv << ["C#",         4]
           csv << ["JavaScript", 4]
           csv << ["Perl",       5]
           csv << ["Ruby",       4]
-        }
+        }).to_stdout
       end
     end
   end
@@ -57,7 +57,7 @@ describe Rbq::CLI do
       let(:script) { 'detect {|language| language["lang"] == "Ruby"}.slice("born_in").flatten.unshift("Ruby was").join(" ").gsub(/_/, " ")' }
 
       it do
-        is_expected.to eq "Ruby was born in 1995\n"
+        expect { cli.run }.to output("Ruby was born in 1995\n").to_stdout
       end
     end
   end
