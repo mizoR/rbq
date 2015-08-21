@@ -10,15 +10,6 @@ describe Rbq::CLI do
     end
   end
 
-  shared_examples_for 'dump as YAML' do |options|
-    context 'when detection the language name born the earliest, and dump as YAML' do
-      let(:argv)   { ['--from', options[:from], '--to', 'yaml', script] }
-      let(:script) { 'max_by {|language| language["born_in"]}' }
-
-      it { expect { cli.run }.to output(YAML.dump('lang' => 'C#', 'born_in' => 2000, 'inspired_by' => %w|Delphi Java C++ Ruby|)).to_stdout }
-    end
-  end
-
   shared_examples_for 'dump as CSV' do |options|
     context "when extraction the languages inspired over 4 languages, and dump as CSV" do
       let(:argv)   { ['--from', options[:from], '--to', 'csv', script] }
@@ -47,33 +38,6 @@ describe Rbq::CLI do
           csv << ["Perl",       5]
           csv << ["Ruby",       4]
         }).to_stdout
-      end
-    end
-  end
-
-  shared_examples_for 'dump as LTSV' do |options|
-    context "when extraction the languages inspired over 4 languages, and dump as LTSV" do
-      let(:argv)   { ['--from', options[:from], '--to', 'ltsv', script] }
-      let(:script) { 'select {|language| language["inspired_by"].length >= 4}.map {|language| language.slice("lang", "born_in")}' }
-
-      it do
-        expect { cli.run }.to output([
-          LTSV.dump(lang: "C#",         born_in: 2000),
-          LTSV.dump(lang: "JavaScript", born_in: 1995),
-          LTSV.dump(lang: "Perl",       born_in: 1987),
-          LTSV.dump(lang: "Ruby",       born_in: 1995),
-        ].join("\n") + "\n").to_stdout
-      end
-    end
-  end
-
-  shared_examples_for 'dump as String' do |options|
-    context "when Ruby was born in?" do
-      let(:argv)   { ['--from', options[:from], '--to', 'string', script] }
-      let(:script) { 'detect {|language| language["lang"] == "Ruby"}.slice("born_in").flatten.unshift("Ruby was").join(" ").gsub(/_/, " ")' }
-
-      it do
-        expect { cli.run }.to output("Ruby was born in 1995\n").to_stdout
       end
     end
   end
@@ -109,31 +73,9 @@ describe Rbq::CLI do
 
       it_behaves_like 'dump as JSON', from: 'json'
 
-      it_behaves_like 'dump as YAML', from: 'json'
-
       it_behaves_like 'dump as CSV', from: 'json'
 
-      it_behaves_like 'dump as TSV', from: 'yaml'
-
-      it_behaves_like 'dump as LTSV', from: 'yaml'
-
-      it_behaves_like 'dump as String', from: 'json'
-    end
-
-    describe 'import as YAML' do
-      let(:data)   { YAML.dump(languages) }
-
-      it_behaves_like 'dump as JSON', from: 'yaml'
-
-      it_behaves_like 'dump as YAML', from: 'yaml'
-
-      it_behaves_like 'dump as CSV', from: 'yaml'
-
-      it_behaves_like 'dump as TSV', from: 'yaml'
-
-      it_behaves_like 'dump as LTSV', from: 'yaml'
-
-      it_behaves_like 'dump as String', from: 'yaml'
+      it_behaves_like 'dump as TSV', from: 'json'
     end
   end
 end

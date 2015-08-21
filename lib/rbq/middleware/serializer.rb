@@ -4,7 +4,7 @@ module Rbq
       extend Middleware::MultiAutoload
       extend Middleware::ConstIndexAccess
 
-      SERIALIZERS = [:JSON, :YAML, :CSV, :TSV, :LTSV, :String]
+      SERIALIZERS = [:JSON, :CSV, :TSV]
 
       const_index_access(*SERIALIZERS)
       multi_autoload(*SERIALIZERS)
