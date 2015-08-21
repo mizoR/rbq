@@ -1,0 +1,11 @@
+    [
+        { "lang": "C",          "born_in": 1973, "inspired_by": ["Algol", "B"]                       },
+        { "lang": "C++",        "born_in": 1980, "inspired_by": ["C", "Simula", "Algol"]             },
+        { "lang": "C#",         "born_in": 2000, "inspired_by": ["Delphi", "Java", "C++", "Ruby"]    },
+        { "lang": "Java",       "born_in": 1994, "inspired_by": ["C++", "Objective-C", "C#"]         },
+        { "lang": "JavaScript", "born_in": 1995, "inspired_by": ["C", "Self", "awk", "Perl"]         },
+        { "lang": "Perl",       "born_in": 1987, "inspired_by": ["C", "shell", "AWK", "sed", "LISP"] },
+        { "lang": "PHP",        "born_in": 1995, "inspired_by": ["Perl", "C"]                        },
+        { "lang": "Python",     "born_in": 1991, "inspired_by": ["ABC", "Perl", "Modula-3" ]         },
+        { "lang": "Ruby",       "born_in": 1995, "inspired_by": ["Perl", "Smalltalk", "LISP", "CLU"] }
+    ]
