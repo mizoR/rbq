@@ -6,7 +6,7 @@ module Rbq
       class JSON
         def initialize(app, options={})
           @app = app
-          @options = options.reverse_merge(quircks_mode: true)
+          @options = options.reverse_merge(quirks_mode: true)
         end
 
         def call(data)

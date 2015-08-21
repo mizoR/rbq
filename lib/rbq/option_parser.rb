@@ -23,10 +23,7 @@ module Rbq
         opt.version = Rbq::VERSION
         opt.separator SEPARATOR
 
-        opt.on(      '--format       FORMAT', 'Load and dump format') {|v| @options[:from][:format] = @options[:to][:format] = v}
-        opt.on(      '--from         FORMAT', 'Load format') {|v| @options[:from][:format] = v}
         opt.on(      '--to           FORMAT', 'Dump format') {|v| @options[:to][:format] = v}
-        opt.on(      '--from-options FORMAT', 'Load format options') {|v| merge_options!(@options[:from][:options], v)}
         opt.on(      '--to-options   FORMAT', 'Dump format options') {|v| merge_options!(@options[:to][:options], v)}
         opt.on('-r', '--require      LIBRARY', 'Require specified library') {|v| require v}
       end

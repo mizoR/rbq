@@ -22,12 +22,14 @@ module Rbq
 
       each_run do |input, output|
         script = Rbq::Script.new(@script) do |rbq|
-          rbq.use Rbq::Middleware::Deserializer[from[:format]], from[:options]
           rbq.use Rbq::Middleware::Serializer[to[:format]], to[:options]
           rbq.use Rbq::Middleware::Colorizer, lang: to[:format] if output.tty?
         end
 
-        output.puts script.run(input.read)
+        parser = Rbq::Parser[from[:format]].new(from[:options])
+        parser.parse(input) do |chunk|
+          output.puts script.run(chunk)
+        end
       end
     end
 
