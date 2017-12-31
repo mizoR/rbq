@@ -1,3 +1,90 @@
 #!/usr/bin/env ruby
 
-raise NotImplementedError
+require 'json'
+require 'optparse'
+
+module Rbq
+  class Parser
+    def initialize(options)
+      @options = options
+    end
+
+    def parse(io)
+      # TODO: Support streaming JSON
+      hash = JSON.parse(io.read, symbolize_names: symbolize_names?)
+
+      yield(hash)
+    end
+
+    def symbolize_names?
+      @options[:symbolize_names]
+    end
+  end
+
+  class Printer
+    def initialize(options)
+      @options = options
+    end
+
+    def print(object)
+      object = [object] if !unwrap?
+
+      object.each do |o|
+        puts JSON.pretty_generate(o)
+      end
+    end
+
+    def unwrap?
+      @options[:unwrap]
+    end
+  end
+
+  class CLI
+    def self.start(*argv)
+      options = { unwrap: false, symbolize_names: true }
+
+      opt.on('--[no-]unwrap')          { |v| options[:unwrap] = v }
+
+      opt.on('--[no-]symbolize_names') { |v| options[:symbolize_names] = v }
+
+      command, *files = opt.parse(argv)
+
+      files = build_files(files)
+
+      new(options).start(command, files)
+    end
+
+    def self.opt
+      @opt ||= OptionParser.new
+    end
+
+    def self.build_files(files)
+      if File.pipe?($stdin)
+        return [$stdin]
+      end
+
+      files.lazy.map { |file| File.open(file) }
+    end
+
+    attr_reader :parser, :printer
+
+    def initialize(options)
+      @printer = Printer.new(unwrap: options[:unwrap])
+      @parser  = Parser.new(symbolize_names: options[:symbolize_names])
+    end
+
+    def start(command, files)
+      files.each do |file|
+        parser.parse(file) do |object|
+          object = object.instance_eval(command)
+
+          printer.print(object)
+        end
+      end
+    end
+  end
+end
+
+if __FILE__ == $0
+  Rbq::CLI.start(*ARGV)
+end
