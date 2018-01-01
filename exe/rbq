@@ -10,11 +10,33 @@ module Rbq
     end
 
     def parse(io)
-      # TODO: Support streaming JSON
-      hash = JSON.parse(io.read, symbolize_names: symbolize_names?)
+      # TODO: Make buf_size small
+      buf_size = 4096 * 256
 
-      yield(hash)
+      builder = Builder.new(@options) { |o| yield(o) }
+
+      while (buf = io.read(buf_size)) != nil
+        builder << buf
+      end
     end
+  end
+
+  class Builder
+    def initialize(options, &built)
+      @options = options
+      @built   = built
+    end
+
+    def <<(buf)
+      buffer = buf
+
+      # TODO: Support streaming JSON
+      object = JSON.parse(buffer, symbolize_names: symbolize_names?)
+
+      @built.call(object)
+    end
+
+    private
 
     def symbolize_names?
       @options[:symbolize_names]
