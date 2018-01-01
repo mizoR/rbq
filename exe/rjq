@@ -3,7 +3,7 @@
 require 'json'
 require 'optparse'
 
-module Rbq
+module Rjq
   class Parser
     def initialize(options)
       @options = options
@@ -108,5 +108,5 @@ module Rbq
 end
 
 if __FILE__ == $0
-  Rbq::CLI.start(*ARGV)
+  Rjq::CLI.start(*ARGV)
 end
